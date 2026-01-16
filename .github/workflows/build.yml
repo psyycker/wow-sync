@@ -8,6 +8,9 @@ on:
   pull_request:
     branches: [master, main]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
@@ -37,10 +40,9 @@ jobs:
           npm install
 
       - name: Build Electron app
-        run: npm run electron:build:${{ matrix.platform }}
+        run: npm run electron:build:${{ matrix.platform }} --publish=never
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
 
