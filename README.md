@@ -1,73 +1,86 @@
-# React + TypeScript + Vite
+# WoW Settings Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A desktop application for synchronizing World of Warcraft addon settings across multiple devices using Google Drive.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Cross-device sync** - Keep your addon settings in sync across all your computers via Google Drive
+- **Profile management** - Create, save, and load addon setting profiles
+- **Multi-version support** - Works with Retail, Classic, and Classic Era
+- **Supported addons**:
+  - ConsolePort
+  - ElvUI
+  - WeakAuras
+  - Details! Damage Meter
+  - Deadly Boss Mods (DBM)
+  - BigWigs
+  - Bartender4
+  - Dominos
 
-## React Compiler
+## Download
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Download the latest release for your platform from the [Releases](https://github.com/psyycker/wow-sync/releases) page:
 
-## Expanding the ESLint configuration
+- **Windows**: `.exe` installer
+- **macOS**: `.dmg` disk image
+- **Linux/Steam Deck**: `.AppImage`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Steam Deck
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Download the `.AppImage` file
+2. Make it executable: `chmod +x WoW-Settings-Manager-*.AppImage`
+3. Run it directly or add as a non-Steam game
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+
+- Node.js 20+
+- npm
+
+### Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Run in development mode
+npm run electron:dev
+
+# Build for your platform
+npm run electron:build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+For Google Drive sync to work, you need Google OAuth credentials:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Create a project and enable the Google Drive API
+3. Create OAuth 2.0 credentials (Desktop app type)
+4. Copy `.env.example` to `.env` and add your credentials:
+
 ```
+GOOGLE_CLIENT_ID=your_client_id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_client_secret
+```
+
+### Build Commands
+
+```bash
+npm run electron:dev      # Development mode with hot reload
+npm run electron:build    # Build for current platform
+npm run electron:build:mac    # Build for macOS
+npm run electron:build:linux  # Build for Linux (AppImage)
+npm run electron:build:win    # Build for Windows
+```
+
+## Tech Stack
+
+- **Frontend**: React 19, TypeScript, Zustand
+- **Desktop**: Electron 34
+- **Build**: Vite, electron-builder
+
+## License
+
+MIT
