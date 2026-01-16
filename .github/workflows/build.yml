@@ -40,7 +40,7 @@ jobs:
           npm install
 
       - name: Build Electron app
-        run: npm run electron:build:${{ matrix.platform }} --publish=never
+        run: npm run electron:build:${{ matrix.platform }}
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}

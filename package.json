@@ -11,11 +11,11 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
-    "electron:build": "vite build && electron-builder",
-    "electron:build:mac": "vite build && electron-builder --mac",
-    "electron:build:linux": "vite build && electron-builder --linux AppImage",
-    "electron:build:win": "vite build && electron-builder --win",
-    "electron:build:all": "vite build && electron-builder --mac --linux --win"
+    "electron:build": "vite build && electron-builder --publish never",
+    "electron:build:mac": "vite build && electron-builder --mac --publish never",
+    "electron:build:linux": "vite build && electron-builder --linux AppImage --publish never",
+    "electron:build:win": "vite build && electron-builder --win --publish never",
+    "electron:build:all": "vite build && electron-builder --mac --linux --win --publish never"
   },
   "dependencies": {
     "googleapis": "^170.1.0",
